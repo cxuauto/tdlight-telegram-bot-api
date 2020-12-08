@@ -47,8 +47,8 @@ jobs:
         cmake --build . --target install
         cd ..
         ls -l
-        ls -l ${{runner.workspace}}/bin
-        7z a tdlight-telegram-bot-api_ubuntu20_clang_x64.zip ${{runner.workspace}}/bin/*
+        ls -l bin
+        7z a tdlight-telegram-bot-api_ubuntu20_clang_x64.zip bin/*
         
     - name: Upload a Release Asset
       uses: actions/upload-release-asset@v1.0.2
@@ -56,7 +56,7 @@ jobs:
         # The URL for uploading assets to the release
         upload_url: https://api.github.com/repos/cxuauto/tdlight-telegram-bot-api/releases/34967274/assets
         # The path to the asset you want to upload
-        asset_path: ${{runner.workspace}}
+        asset_path: ${{runner.workspace}}/tdlight-telegram-bot-api
         # The name of the asset you want to upload
         asset_name: tdlight-telegram-bot-api_ubuntu20_clang_x64.zip
         # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
