@@ -32,7 +32,7 @@ jobs:
         rm -rf build 
         mkdir build
         upload_url=$(curl -sL https://api.github.com/repos/cxuauto/tdlight-telegram-bot-api/releases/latest | jq -r '.upload_url')
-        echo ::set-env name=UPLOAD_URL::$upload_url
+        echo "UPLOAD_URL=$upload_url" >> $GITHUB_ENV
         echo ${{ env.UPLOAD_URL }}
 
     - name: Build
