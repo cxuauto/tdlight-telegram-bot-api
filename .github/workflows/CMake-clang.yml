@@ -47,7 +47,7 @@ jobs:
         cmake --build . --target install
         cd ..
         ls -l
-        ls -l ${{runner.workspace}}/bin/*
+        ls -l ${{runner.workspace}}/bin
         7z a tdlight-telegram-bot-api_ubuntu20_clang_x64.7z ${{runner.workspace}}/bin/*
         
     - name: Upload a Release Asset
