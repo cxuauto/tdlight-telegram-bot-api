@@ -48,7 +48,7 @@ jobs:
         cd ..
         ls -l
         ls -l ${{runner.workspace}}/bin/*
-        7z a tdlight-telegram-bot-api_ubuntu_x64.7z ${{runner.workspace}}/bin/*
+        7z a tdlight-telegram-bot-api_ubuntu20_gcc_x64.7z ${{runner.workspace}}/bin/*
         
     - name: Upload a Release Asset
       uses: actions/upload-release-asset@v1.0.2
