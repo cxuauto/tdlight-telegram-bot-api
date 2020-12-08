@@ -36,14 +36,14 @@ jobs:
 
     - name: Build
       working-directory: ${{runner.workspace}}/build
-      shell: bash
+      # shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. ..
         cmake --build . --target install
-        cd ../..
-        ls -l telegram-bot-api/bin/telegram-bot-api*
-        7z a tdlight-telegram-bot-api_ubuntu_x64.7z telegram-bot-api/bin
+        cd ..
+        ls -l bin/*
+        7z a tdlight-telegram-bot-api_ubuntu_x64.7z bin/*
         
     - name: Upload a Release Asset
       uses: actions/upload-release-asset@v1.0.2
