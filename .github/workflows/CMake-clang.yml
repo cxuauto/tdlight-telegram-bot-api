@@ -48,7 +48,7 @@ jobs:
         cd ..
         ls -l
         ls -l ${{runner.workspace}}/bin
-        7z a tdlight-telegram-bot-api_ubuntu20_clang_x64.7z ${{runner.workspace}}/bin/*
+        7z a tdlight-telegram-bot-api_ubuntu20_clang_x64.zip ${{runner.workspace}}/bin/*
         
     - name: Upload a Release Asset
       uses: actions/upload-release-asset@v1.0.2
@@ -58,6 +58,6 @@ jobs:
         # The path to the asset you want to upload
         asset_path: ${{runner.workspace}}
         # The name of the asset you want to upload
-        asset_name: tdlight-telegram-bot-api_ubuntu20_clang_x64.7z
+        asset_name: tdlight-telegram-bot-api_ubuntu20_clang_x64.zip
         # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
-        asset_content_type: application/x-7z-compressed
+        asset_content_type: application/zip
