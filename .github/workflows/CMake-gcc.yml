@@ -67,7 +67,7 @@ jobs:
         # The URL for uploading assets to the release
         upload_url: https://uploads.github.com/repos/cxuauto/tdlight-telegram-bot-api/releases/34967274/assets
         # The path to the asset you want to upload
-        asset_path: ${{runner.workspace}}/tdlight-telegram-bot-api
+        asset_path: ${{runner.workspace}}/tdlight-telegram-bot-api/tdlight-telegram-bot-api_${{ matrix.os }}_gcc_x64.zip
         # The name of the asset you want to upload
         asset_name: tdlight-telegram-bot-api_${{ matrix.os }}_gcc_x64.zip
         # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
