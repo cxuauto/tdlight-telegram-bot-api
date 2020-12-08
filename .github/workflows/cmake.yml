@@ -31,6 +31,8 @@ jobs:
         sudo apt-get install p7zip-full
         rm -rf build 
         mkdir build
+        which clang-10
+        which clang++-10
 
     - name: Build
       working-directory: ${{runner.workspace}}/build
