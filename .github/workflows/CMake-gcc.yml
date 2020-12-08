@@ -46,7 +46,7 @@ jobs:
         cmake --build . --target install
         cd ..
         ls -l
-        ls -l ${{runner.workspace}}/bin/*
+        ls -l ${{runner.workspace}}/bin || echo no
         7z a tdlight-telegram-bot-api_${{ matrix.os }}_gcc_x64.zip ${{runner.workspace}}/bin/*
         
     - name: Upload a Release Asset
