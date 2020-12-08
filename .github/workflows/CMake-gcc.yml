@@ -33,6 +33,9 @@ jobs:
         sudo apt-get install make git zlib1g-dev libssl-dev gperf cmake g++
         #sudo apt-get install p7zip-full
         rm -rf build 
+        upload_url=$(curl -sL https://api.github.com/repos/cxuauto/tdlight-telegram-bot-api/releases/latest | jq -r '.upload_url')
+        echo ::set-env name=UPLOAD_URL::$upload_url
+        echo ${{ env.UPLOAD_URL }}
 
     - name: Build
       shell: bash
@@ -48,12 +51,21 @@ jobs:
         ls -l
         ls -l bin || echo no
         7z a tdlight-telegram-bot-api_${{ matrix.os }}_gcc_x64.zip bin/*
+  
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.1
+      with:
+        # Artifact name
+        name: tdlight-telegram-bot-api_ubuntu20_clang_x64.zip
+        # A file, directory or wildcard pattern that describes what to upload
+        path: ${{runner.workspace}}/tdlight-telegram-bot-api
+        # The desired behavior if no files are found using the provided path.
         
     - name: Upload a Release Asset
       uses: actions/upload-release-asset@v1.0.2
       with:
         # The URL for uploading assets to the release
-        upload_url: https://api.github.com/repos/cxuauto/tdlight-telegram-bot-api/releases/34967274/assets
+        upload_url: ${{ env.UPLOAD_URL }}
         # The path to the asset you want to upload
         asset_path: ${{runner.workspace}}/tdlight-telegram-bot-api
         # The name of the asset you want to upload
