@@ -39,10 +39,12 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
-        CXXFLAGS="-stdlib=libc++" CC="/usr/bin/clang-10" CXX="/usr/bin/clang++-10" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. ..
+        pwd
+        ls -l ..
+        # -DCMAKE_INSTALL_PREFIX:PATH=.. 
+        CXXFLAGS="-stdlib=libc++" CC="/usr/bin/clang-10" CXX="/usr/bin/clang++-10" cmake -DCMAKE_BUILD_TYPE=Release .. 
         cmake --build . --target install
         cd ..
-        pwd
         ls -l
         ls -l ${{runner.workspace}}/bin/*
         7z a tdlight-telegram-bot-api_ubuntu_x64.7z ${{runner.workspace}}/bin/*
