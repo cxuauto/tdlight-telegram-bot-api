@@ -1,0 +1,56 @@
+name: CMake
+
+on: 
+  workflow_dispatch:
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Environment Setup
+      # Some projects don't allow in-source building, so create a separate build directory
+      # We'll use this as our working directory for all subsequent commands
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get upgrade
+        sudo apt-get install make git zlib1g-dev libssl-dev gperf cmake clang-10 libc++-dev libc++abi-dev
+        sudo apt-get install p7zip-full
+        rm -rf build 
+        mkdir build
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: |
+        CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. ..
+        cmake --build . --target install
+        cd ../..
+        ls -l telegram-bot-api/bin/telegram-bot-api*
+        7z a tdlight-telegram-bot-api_ubuntu_x64.7z telegram-bot-api/bin
+        
+    - name: Upload a Release Asset
+      uses: actions/upload-release-asset@v1.0.2
+      with:
+        # The URL for uploading assets to the release
+        upload_url: https://api.github.com/repos/cxuauto/tdlight-telegram-bot-api/releases/34967274/assets
+        # The path to the asset you want to upload
+        asset_path: ${{runner.workspace}}/build
+        # The name of the asset you want to upload
+        asset_name: tdlight-telegram-bot-api_ubuntu_x64.7z
+        # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
+        asset_content_type: application/x-7z-compressed
